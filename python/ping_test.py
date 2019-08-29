@@ -13,7 +13,7 @@ statistic = {'transmitted': 0,
              'unreachable': 0}
 
 
-def packet_loss():
+def calculate_packet_loss():
     ''' Calculate packet_loss % '''
     received = statistic.get('received', 0)
     transmitted = statistic.get('transmitted', 0)
@@ -26,7 +26,7 @@ def update_statistic(key, get_packet_loss=False):
     statistic[key] = statistic.get(key, 0) + 1
     if get_packet_loss:
         statistic['packet_loss'] = statistic.setdefault('packet_loss', 0)
-        statistic['packet_loss'] = packet_loss()
+        statistic['packet_loss'] = calculate_packet_loss()
     return(statistic)
 
 
