@@ -30,7 +30,7 @@ def update_statistic(key, get_packet_loss=False):
     return(statistic)
 
 
-def ping(host_or_ip, interval=4, packetsize=8, get_packet_loss=False):
+def subping(host_or_ip, interval=4, packetsize=8, get_packet_loss=False):
     ''' Calls system "ping" command as subprocess, and count packets by returncode.
         returncode: "0" - success,
         returncode: "1", "2" - interprets like host unreachable. (see man ping)
@@ -75,7 +75,7 @@ def loop(packets=1):
     packet = 0
     while packet < packets:
         packet += 1
-        print(ping(HOST, get_packet_loss=GET_PACKET_LOSS))
+        print(subping(HOST, get_packet_loss=GET_PACKET_LOSS))
 
 
 def by_time():
