@@ -44,25 +44,27 @@ def subping(host_or_ip, interval=4, packetsize=8, get_packet_loss=False):
     command = ["ping", str(host_or_ip), "-c", "1", "-s", str(packetsize)]
     try:
         # Popen parameters: discard input, output and error messages
-        check = subprocess.Popen(command, bufsize=1,
-                                 stdin=subprocess.DEVNULL,
-                                 stdout=subprocess.DEVNULL,
-                                 stderr=subprocess.DEVNULL)
+        ping = subprocess.Popen(command, bufsize=1,
+                                stdin=subprocess.DEVNULL,
+                                stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL)
         time.sleep(interval)
         # to get returncode, but don't raise CalledProcessError()
-        stdout, _ = check.communicate()
-        check.poll()
-        if check.returncode == 0:
+        stdout, _ = ping.communicate()
+        ping.poll()
+        if ping.returncode == 0:
             return(update_statistic('received', get_packet_loss))
-        elif check.returncode == 2:
+        elif ping.returncode == 2:
             return(update_statistic('unreachable', get_packet_loss))
-        elif check.returncode == 1:
+        elif ping.returncode == 1:
             # if ping does not receive any reply packets at all. (see man ping)
             return(update_statistic('unreachable', get_packet_loss))
         else:
-            print("unhandled returncode {0}".format(str(check.returncode)))
-        # check.stdout.close()
+            print("unhandled returncode {0}".format(str(ping.returncode)))
+            ping.kill()
+        # ping.stdout.close()
     except subprocess.CalledProcessError:
+        ping.kill()
         # suppress the original error, with "from None"
         raise RuntimeError("Something wrong here!") from None
 
