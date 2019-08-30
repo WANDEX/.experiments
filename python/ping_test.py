@@ -45,6 +45,12 @@ def reset_stats(dictionary):
     print("\nValues are now set to 0.\n{0}\n".format(dictionary.items()))
 
 
+def count_iteration(counter, string):
+    iteration = next(counter)
+    print("{0}:{1} iteration.".format(str(iteration), string))
+    return(iteration)
+
+
 def subping(host_or_ip, interval=4, packetsize=8, get_packet_loss=False):
     ''' Calls system "ping" command as subprocess, and count packets by returncode.
         returncode: "0" - success,
