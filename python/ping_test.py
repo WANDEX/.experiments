@@ -96,8 +96,21 @@ def ping_loop():
         print(subping(HOST, get_packet_loss=GET_PACKET_LOSS))
 
 
-def by_time():
-    pass
+def time_loop(time_slice=TIME_SLICE):
+    ''' time_loop
+    Optional parameters:
+        time_slice (int, last 't' minutes to store statistics)
+    '''
+    count_iteration(time_iteration, "time_loop()")
+    # start_time = time.time()
+    time_slice *= 60
+    while time_slice:
+        mins, secs = divmod(time_slice, 60)
+        timeformat = '{:02d}:{:02d}'.format(mins, secs)
+        print(timeformat, end='\r')
+        time.sleep(1)
+        time_slice -= 1
+    print("Timer Has Ended.")
+    reset_stats(statistics)
+    time_loop()
 
-
-loop(10)
