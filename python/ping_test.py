@@ -29,13 +29,14 @@ def calculate_packet_loss():
 
 
 def update_statistic(key, get_packet_loss=False):
-    ''' Update ping statistic '''
-    statistic['transmitted'] = statistic.get('transmitted', 0) + 1
-    statistic[key] = statistic.get(key, 0) + 1
+    ''' Update ping statistics '''
+    statistics['transmitted'] = statistics.get('transmitted', 0) + 1
+    statistics[key] = statistics.get(key, 0) + 1
     if get_packet_loss:
-        statistic['packet_loss'] = statistic.setdefault('packet_loss', 0)
-        statistic['packet_loss'] = calculate_packet_loss()
-    return(statistic)
+        statistics['packet_loss'] = statistics.setdefault('packet_loss', 0)
+        statistics['packet_loss'] = calculate_packet_loss()
+    return(statistics)
+
 
 
 def subping(host_or_ip, interval=4, packetsize=8, get_packet_loss=False):
