@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from threading import Thread
+from itertools import count
 import subprocess
 import time
 
 # Google Public DNS: 8.8.8.8 or 8.8.4.4
 HOST = "8.8.8.8"
+# TODO: add handle to INTERVAL, PACKETSIZE,
+INTERVAL = 4
+PACKETSIZE = 8
+# TODO: recheck work of GET_PACKET_LOSS
 GET_PACKET_LOSS = True
+# show statistics for last 't' minutes
+TIME_SLICE = 12 * 60
 
-statistic = {'transmitted': 0,
-             'received': 0,
-             'unreachable': 0}
+time_iteration = count()
+
+statistics = {'transmitted': 0, 'received': 0, 'unreachable': 0}
 
 
 def calculate_packet_loss():
