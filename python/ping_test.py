@@ -114,3 +114,13 @@ def time_loop(time_slice=TIME_SLICE):
     reset_stats(statistics)
     time_loop()
 
+
+if __name__ == '__main__':
+    print("Starting...")
+    thread_main = Thread(target=ping_loop, daemon=True)
+    thread_time = Thread(target=time_loop, daemon=True)
+    thread_main.start()
+    thread_time.start()
+    thread_main.join()
+    thread_time.join()
+    print("Done.")
