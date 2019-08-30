@@ -90,14 +90,9 @@ def subping(host_or_ip, interval=4, packetsize=8, get_packet_loss=False):
         raise RuntimeError("Something wrong here!") from None
 
 
-def loop(packets=1):
-    ''' Main loop
-    Optional parameters:
-    packets  (int, number of retries)
-    '''
-    packet = 0
-    while packet < packets:
-        packet += 1
+def ping_loop():
+    ''' Main ping_loop '''
+    while True:
         print(subping(HOST, get_packet_loss=GET_PACKET_LOSS))
 
 
