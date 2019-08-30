@@ -23,8 +23,8 @@ statistics = {'transmitted': 0, 'received': 0, 'unreachable': 0}
 
 def calculate_packet_loss():
     ''' Calculate packet_loss % '''
-    received = statistic.get('received', 0)
-    transmitted = statistic.get('transmitted', 0)
+    received = statistics.get('received', 0)
+    transmitted = statistics.get('transmitted', 0)
     return(round(100 - (received / transmitted * 100), 2))
 
 
