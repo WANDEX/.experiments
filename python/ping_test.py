@@ -25,7 +25,7 @@ def calculate_packet_loss():
     return round(100 - (received / transmitted * 100), 2)
 
 
-def update_statistic(key, get_packet_loss=GET_PACKET_LOSS):
+def update_statistics(key, get_packet_loss=GET_PACKET_LOSS):
     """Update ping statistics."""
     statistics["transmitted"] = statistics.get("transmitted", 0) + 1
     statistics[key] = statistics.get(key, 0) + 1
@@ -82,12 +82,12 @@ def subping(
         stdout, _ = ping.communicate()
         ping.poll()
         if ping.returncode == 0:
-            return update_statistic("received", get_packet_loss)
+            return update_statistics("received", get_packet_loss)
         elif ping.returncode == 2:
-            return update_statistic("unreachable", get_packet_loss)
+            return update_statistics("unreachable", get_packet_loss)
         elif ping.returncode == 1:
             # if ping does not receive any reply packets at all. (see man ping)
-            return update_statistic("unreachable", get_packet_loss)
+            return update_statistics("unreachable", get_packet_loss)
         else:
             print("unhandled returncode {0}".format(str(ping.returncode)))
             ping.kill()
