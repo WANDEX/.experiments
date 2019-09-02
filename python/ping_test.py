@@ -61,8 +61,14 @@ def reset_stats(dictionary):
     print("\nValues are now set to 0.\n{0}\n".format(dictionary.items()))
 
 
-def count_iteration(counter, string):
-    """Iteration counter for recursive functions and loops."""
+def count_iteration(counter, string=""):
+    """Iteration counter for recursive functions and loops.
+
+    Required parameter:
+        counter: (itertools.count(), global variable)
+    Optional parameter:
+        string: (str, optional message after iteration number)
+    """
     iteration = next(counter)
     print("{0}:{1} iteration.".format(str(iteration), string))
     return iteration
