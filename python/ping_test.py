@@ -111,10 +111,10 @@ def ping_loop():
 
 
 def time_loop(time_slice=TIME_SLICE):
-    """Infinite time_loop.
+    """Infinite time_loop. Recursive function.
 
-    Optional parameters:
-        time_slice (int, last 't' minutes to store statistics)
+    Optional parameter:
+        time_slice (int, last 't' minutes statistics storage)
     """
     count_iteration(time_iteration, "time_loop()")
     time_slice *= 60
