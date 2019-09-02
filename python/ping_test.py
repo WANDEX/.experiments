@@ -74,20 +74,11 @@ def count_iteration(counter, string=""):
     return iteration
 
 
-def subping(
-    host_or_ip=HOST,
-    interval=INTERVAL,
-    packetsize=PACKETSIZE,
-    get_packet_loss=GET_PACKET_LOSS,
-):
-    """Calls system "ping" command as subprocess, and count packets by
-    returncode.
+def subping(host_or_ip=HOST, interval=INTERVAL, packetsize=PACKETSIZE):
+    """Calls system "ping" command as subprocess, and returns returncode.
 
-        returncode: "0" - success,
-        returncode: "1", "2" - interprets like host unreachable. (see man ping)
-    Required parameter:
-        host_or_ip (str, address of host/ip to ping)
     Optional parameters:
+        host_or_ip (str, address of host/ip to ping),
         interval   (int, wait interval seconds between sending each packet),
         packetsize (int, number of data bytes to be sent + 8 bytes of ICMP
         header data)
