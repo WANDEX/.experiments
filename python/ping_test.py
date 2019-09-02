@@ -35,6 +35,21 @@ def update_statistics(key, get_packet_loss=GET_PACKET_LOSS):
     return statistics
 
 
+def return_swith(returncode):
+    """Gets returncode from subping() and returns update_statistics().
+
+    Required parameter: returncode.
+        returncode: "0" - success,
+        returncode: "1", "2" - interprets like host unreachable. (see man ping)
+    """
+    switch = {
+            0: "received",
+            1: "unreachable",
+            2: "unreachable",
+    }
+    return update_statistics(switch.get(returncode, None))
+
+
 def reset_stats(dictionary):
     """Reset to 0 all dictionary values."""
     for key in dictionary.keys():
