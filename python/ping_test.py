@@ -51,7 +51,11 @@ def return_swith(returncode):
 
 
 def reset_stats(dictionary):
-    """Reset to 0 all dictionary values."""
+    """Reset to 0 all dictionary values.
+
+    Required parameter:
+        dictionary: (dict, dictionary to reset)
+    """
     for key in dictionary.keys():
         dictionary[key] = 0
     print("\nValues are now set to 0.\n{0}\n".format(dictionary.items()))
