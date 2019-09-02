@@ -97,17 +97,7 @@ def subping(host_or_ip=HOST, interval=INTERVAL, packetsize=PACKETSIZE):
         # to get returncode, but don't raise CalledProcessError()
         stdout, _ = ping.communicate()
         ping.poll()
-        if ping.returncode == 0:
-            return update_statistics("received", get_packet_loss)
-        elif ping.returncode == 2:
-            return update_statistics("unreachable", get_packet_loss)
-        elif ping.returncode == 1:
-            # if ping does not receive any reply packets at all. (see man ping)
-            return update_statistics("unreachable", get_packet_loss)
-        else:
-            print("unhandled returncode {0}".format(str(ping.returncode)))
-            ping.kill()
-        # ping.stdout.close()
+        return return_swith(ping.returncode)
     except subprocess.CalledProcessError:
         ping.kill()
         # suppress the original error, with "from None"
