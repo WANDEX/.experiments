@@ -35,7 +35,7 @@ class Packet_loss:
         self.statistics[key] = self.statistics.get(key, 0) + 1
         if get_packet_loss:
             self.statistics["packet_loss"] = self.statistics.setdefault("packet_loss", 0)
-            self.statistics["packet_loss"] = self.calculate_packet_loss(self)
+            self.statistics["packet_loss"] = self.calculate_packet_loss()
         return self.statistics
 
     def return_swith(self, returncode):
@@ -50,9 +50,9 @@ class Packet_loss:
                 1: "unreachable",
                 2: "unreachable",
         }
-        return self.update_statistics(self, switch.get(returncode, None))
+        return self.update_statistics(switch.get(returncode, None))
 
-    def reset_stats(dictionary):
+    def reset_stats(self, dictionary):
         """Reset to 0 all dictionary values.
 
         Required parameter:
@@ -62,7 +62,7 @@ class Packet_loss:
             dictionary[key] = 0
         print("\nValues are now set to 0.\n{0}\n".format(dictionary.items()))
 
-    def count_iteration(counter, string=""):
+    def count_iteration(self, counter, string=""):
         """Iteration counter for recursive functions and loops.
 
         Required parameter:
@@ -97,7 +97,7 @@ class Packet_loss:
             # to get returncode, but don't raise CalledProcessError()
             stdout, _ = ping.communicate()
             ping.poll()
-            return self.return_swith(self, ping.returncode)
+            return self.return_swith(ping.returncode)
         except subprocess.CalledProcessError:
             ping.kill()
             # suppress the original error, with "from None"
@@ -106,7 +106,7 @@ class Packet_loss:
     def ping_loop(self):
         """Infinite ping_loop."""
         while True:
-            print(self.subping(self))
+            print(self.subping())
 
     def time_loop(self, time_slice=TIME_SLICE):
         """Infinite time_loop. Recursive function.
@@ -124,22 +124,16 @@ class Packet_loss:
             time_slice -= 1
         print("Timer Has Ended.")
         self.reset_stats(self.statistics)
-        self.time_loop(self)
+        self.time_loop()
 
     def make_threads(self):
-        """  """
-
-        pl_ping = type(self)
-        pl_time = type(self)
-        thread_ping = Thread(target=pl_ping.ping_loop(self), daemon=True)
-        thread_time = Thread(target=pl_time.time_loop(self), daemon=True)
-        # thread_ping = Thread(target=self.ping_loop(self), daemon=True)
-        # thread_time = Thread(target=self.time_loop(self), daemon=True)
+        """Create and start two main threads."""
+        thread_ping = Thread(target=self.ping_loop, daemon=True)
+        thread_time = Thread(target=self.time_loop, daemon=True)
         thread_ping.start()
         thread_time.start()
         thread_ping.join()
         thread_time.join()
 
 
-pl = Packet_loss()
-pl.make_threads()
+Packet_loss().make_threads()
