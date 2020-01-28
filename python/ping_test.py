@@ -38,7 +38,7 @@ class Packet_loss:
             self.statistics["packet_loss"] = self.calculate_packet_loss()
         return self.statistics
 
-    def return_swith(self, returncode):
+    def return_switch(self, returncode):
         """Gets returncode from subping() and returns update_statistics().
 
         Required parameter: returncode.
@@ -97,7 +97,7 @@ class Packet_loss:
             # to get returncode, but don't raise CalledProcessError()
             stdout, _ = ping.communicate()
             ping.poll()
-            return self.return_swith(ping.returncode)
+            return self.return_switch(ping.returncode)
         except subprocess.CalledProcessError:
             ping.kill()
             # suppress the original error, with "from None"
