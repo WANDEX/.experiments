@@ -27,7 +27,7 @@ class Packet_loss:
         """Calculate packet_loss %."""
         received = self.statistics.get("received", 0)
         transmitted = self.statistics.get("transmitted", 0)
-        return round(100 - (received / transmitted * 100), 2)
+        return format(100 - (received / transmitted * 100), ".2f")
 
     def update_statistics(self, key, get_packet_loss=GET_PACKET_LOSS):
         """Update ping statistics."""
